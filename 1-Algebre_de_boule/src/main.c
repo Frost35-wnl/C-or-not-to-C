@@ -1,24 +1,36 @@
 // Nom : main.c
 // Author : Frost35-wnl
-#include "../include/affichage.h"
-#include "../include/transcodage.h"
+#include "../include/projectLibrary.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
     char userChoice = 0;
 
-    afficherMenu();
-    userChoice = getchar();
-    switch (userChoice)
+    do
     {
-    case 1: transcodage();
-        break;
-    case 2: // appeler fonction dans entierRelatif
-        break;
-    case 3: // appeler fonction dans nombreReel
-        break;
-    case 'q':
-        return 0;
-    }
+        system("clear");
+        userChoice = 0;
+        afficherMenu();
+        userChoice = getchar();
+        while (getchar() != '\n');
+        
+        switch (userChoice)
+        {
+        case '1': 
+        {
+            transcodage();
+            break;
+        } 
+        default: return 0;
+        // case 2: // appeler fonction dans entierRelatif
+        // case 3: // appeler fonction dans nombreReel
+        // case 'q':
+        //     return 0;
+        }
+
+    } while (1);
+    
+    return 0;
 }

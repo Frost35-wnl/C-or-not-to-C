@@ -1,14 +1,11 @@
 #include "../include/transcodage.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <math.h>
+#include "../include/standardLibrary.h"
+
 #define SIZE_OF_LONG sizeof(long)
 #define MAX_INPUT_LENGTH SIZE_OF_LONG * 8 + 6
 
 int transcodage()
 {
-    system("clear");
     char *userInput = NULL;
     short userNumberLength = 0;
     short userBaseFrom = 0, userBaseTo = 0;
@@ -16,13 +13,16 @@ int transcodage()
 
     do
     {
-        // system("clear");
         userInput = malloc(MAX_INPUT_LENGTH * sizeof(char));
         printTranscodageMenu();
         getUserInput(userInput);
 
-        if (userNavigation(userInput) == 1)
-            break;
+        if (userNavigation(userInput) == 1) break;
+        if (userNavigation(userInput) == 2)
+        {
+            free(userInput);
+            continue;
+        }
 
         if (checkUserInput(userInput) == 1)
         {
@@ -87,10 +87,14 @@ int transcodage()
 
 void printTranscodageMenu(void)
 {
-    // system("clear");
-    printf("\n\tTranscodage");
-    printf("\n\nVous pouvez transformer un nombre depuis une base vers une autre base (base 2, 4, 8, 10, 16)\n");
-    printf("\nExemple : (nombre)-(base de depart)-(base du resultat) --exemple : 12345678-10-16\nTaper 'q' pour quitter\nTaper '..' pour revenir au menu principal");
+    system("clear");
+    printf("\n _______________________________________________ \n");
+    printf("|                                               |\n");
+    printf("|                  Transcodage                  |\n");
+    printf("|                                               |\n");
+    printf("|_______________________________________________|\n");
+    printf("\n\nVous pouvez transformer un nombre d'une base vers une autre (bases 2, 4, 8, 10, 16)\n");
+    printf("\nExemple : (nombre)-(base de départ)-(base du résultat) -- exemple : 12345678-10-16\nTaper 'q' pour quitter\nTaper '..' pour revenir au menu principal");
     printf("\n\n\tVotre choix : ");
 }
 
@@ -102,14 +106,20 @@ void getUserInput(char *userInputTemplate)
     {
         i++;
     }
+
     userInputTemplate[i] = '\0';
 }
 
 int userNavigation(char *userInputTemplate)
 {
-    if (userInputTemplate[0] == 'q' || userInputTemplate[0] == 'Q' || userInputTemplate[0] == '\n')
+    if (userInputTemplate[0] == 'q' || userInputTemplate[0] == 'Q')
     {
         exit(0);
+    }
+
+    if (userInputTemplate[0] == '\0')
+    {
+        return 2;
     }
 
     if (userInputTemplate[0] == '.' && userInputTemplate[1] == '.')
@@ -142,13 +152,19 @@ int checkUserInput(char *userInputTemplate)
 
 void printTranscodageGuide(void)
 {
-    printf("----------------------------------------------------------------\n\n");
-    printf("\n\tGuide Transcodage");
-    printf("\n\nVoici les erreurs a eviter pour que le code fonctionne : ");
-    printf("\n\t1 - Faites en sorte que les bases soient ecritent en deux digits\n\t2 - Le seul caractere valide est '-' pour separer les chiffres\n\t3 - Pour les nombres HEX (en base 16) eviter des caracteres superieures a 'f'");
-
-    printf("\n\nNote : en base 16 A = 10, B = 11, C = 12, D = 13, E = 14, F = 16\n\n");
-    printf("----------------------------------------------------------------\n\n");
+    printf("\n _______________________________________________________________________________________\n");
+    printf("|                                                                                       |\n");
+    printf("|       Guide Transcodage                                                               |\n");
+    printf("|                                                                                       |\n");
+    printf("|   Voici les erreurs à éviter pour que le code fonctionne :                            |\n");
+    printf("|                                                                                       |\n");
+    printf("|       1 - Faites en sorte que les bases soient écrites en deux chiffres               |\n");
+    printf("|       2 - Le seul caractère valide est '-' pour séparer les chiffres                  |\n");
+    printf("|       3 - Pour les nombres HEX (en base 16), évitez des caractères supérieurs à 'f'   |\n");
+    printf("|                                                                                       |\n");
+    printf("|                                                                                       |\n");
+    printf("|  Note : en base 16, A = 10, B = 11, C = 12, D = 13, E = 14, F = 15                    |\n");
+    printf("|_______________________________________________________________________________________|\n\n");
 }
 
 void parseUserInput(char *userInputTemplate, short userNumberLength, char *userNumberTemplate, short *baseFrom, short *baseTo)
@@ -210,13 +226,13 @@ int checkValidInputForBase(char *userNumberTemplate, int baseFrom)
         if (isalpha(userNumberTemplate[i]) && (baseFrom != 16)) // For HEX number
         {
             system("clear");
-            printf("\n\nWARNING : Le nombre entre depasse la base donnee !\n\n");
+            printf("\n\nWARNING : Le nombre entré dépasse la base donnée !\n\n");
             return 1;
         }
         else if (isdigit(userNumberTemplate[i]) && (char)userNumberTemplate[i] - 48 > baseFrom) // For int number
         {
             system("clear");
-            printf("\n\nWARNING : Le nombre entre depasse la base donnee !\n\n");
+            printf("\n\nWARNING : Le nombre entré dépasse la base donnée !\n\n");
             return 1;
         }
 
@@ -304,18 +320,22 @@ void printFinalresult(char *userNumberTemplate, long Base10, short userBaseFrom,
 {
     int i = 0;
     system("clear");
-    printf("----------------------------------------------------------------\n\n");
-    printf("Le nombre ");
+    printf("\n ___________________________________________________________________________________________________________________________________________\n");
+    printf("|                                                                                                                                           |\n");
+    printf("|                                                                                                                                           |\n");
+    printf("|   Le nombre ");
     while (userNumberTemplate[i] != '\0')
     {
         putchar(userNumberTemplate[i]);
         i++;
     }
-    printf(" ecrit en base %d que vous avez entre donne : ", userBaseFrom);
+    printf(" écrit en base %d que vous avez entrée : ", userBaseFrom);
     toFinalBase(Base10, userBaseTo);
-    printf(" en base %d\n\n", userBaseTo);
-    printf("----------------------------------------------------------------\n\n");
-    printf("\nTaper 'Entrer' pour continuer : ");
+    printf(" en base %d \n", userBaseTo);
+    printf("|                                                                                                                                           |\n");
+    printf("|                                                                                                                                           |\n");
+    printf("|___________________________________________________________________________________________________________________________________________|\n\n");
+    printf("\nTaper 'Entrée' pour continuer : ");
     while (getchar() != '\n')
         ;
 }

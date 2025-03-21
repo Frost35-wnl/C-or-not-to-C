@@ -3,8 +3,15 @@
 
 void afficherMenu(void)
 {
-    printf("\t\nAlgebre de Boule");
-    printf("\nCe programme va vous permettre de faire les conversions avec le module Algebre de Boule vu en AP1");
-    printf("\nMenu : \n\t1-Transcodage\n\t2-Codage des entiers relatif\n\t3-Codage des nombres reels\n\nTaper 'q' pour quitter\n\n");
+    printf("\n _______________________________________________ \n");
+    printf("|                                               |\n");
+    printf("|                                               |\n");
+    printf("|                Algèbre de Boule               |\n");
+    printf("|                                               |\n");
+    printf("|                                               |\n");
+    printf("|______________________________By Frost35-wnl___|\n");
+    printf("\nCe programme vous permettra de faire les conversions avec le module Algèbre de Boule vu en AP1");
+    printf("\nMenu : \n\t1 - Transcodage\n\t2 - Codage des entiers relatifs (en développement)\n\t3 - Codage des nombres réels (en développement)\n\nTaper 'q' pour quitter\n\n");
     printf("\tVotre choix : ");
+
 }

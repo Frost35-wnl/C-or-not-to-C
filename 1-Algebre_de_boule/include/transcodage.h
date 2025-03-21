@@ -1,6 +1,8 @@
 #ifndef TRANSCODAGE_H
 #define TRANSCODAGE_H
 
+int transcodage();
+
 void printTranscodageMenu(void);
 void printTranscodageGuide(void);
 void getUserInput(char *userInputTemplate);
@@ -15,8 +17,6 @@ int checkValidInputForBase(char *userNumberTemplate, int baseFrom);
 
 long toBase10(char *userNumberTemplate, short userNumberLength, short baseFrom);
 void toFinalBase(long base10, short baseTo);
-void printFinalresult(char* userNumberTemplate, long Base10, short userBaseFrom, short userBaseTo);
-
-
+void printFinalresult(char *userNumberTemplate, long Base10, short userBaseFrom, short userBaseTo);
 
 #endif
